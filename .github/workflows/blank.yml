@@ -1,4 +1,4 @@
-name: Release Conba
+name: Auto Release
 
 on:
   push:

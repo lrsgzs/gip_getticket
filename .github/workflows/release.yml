@@ -16,8 +16,8 @@ jobs:
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: Release${{ github.sha }}
-          name: Release ${{ github.sha }}
+          tag_name: ${{ github.ref }}
+          name: Release ${{ github.ref }}
           body: 请查看README.md | Please look at README.md
           draft: false
           prerelease: false

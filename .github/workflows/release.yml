@@ -18,7 +18,7 @@ jobs:
         with:
           tag_name: ${{ github.sha }}
           name: ${{ github.sha }}
-          body_path: README.md
+          body_path: ./README.md
           draft: false
           prerelease: false
 

@@ -14,12 +14,11 @@ jobs:
     steps:
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.event_name }}
-          release_name: ${{ github.event_name }}
+          tag_name: ${{ github.sha }}
+          name: ${{ github.sha }}
+          body_path: README.md
           draft: false
           prerelease: false
 

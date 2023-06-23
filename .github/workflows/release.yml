@@ -2,8 +2,7 @@ name: Auto Release
 
 on:
   push:
-    tags:
-    - release*
+    branches: [ "main" ]
 
 jobs:
   release:

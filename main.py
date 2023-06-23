@@ -1,24 +1,25 @@
-import ctypes
 import sys
+if sys.platform == "win32":
+    import ctypes
+    import winreg
 
 
-def is_admin():
-    try:
-        return ctypes.windll.shell32.IsUserAnAdmin()
-    except:
-        return False
+    def is_admin():
+        try:
+            return ctypes.windll.shell32.IsUserAnAdmin()
+        except:
+            return False
 
 
-if not is_admin():
-    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
-    sys.exit()
+    if not is_admin():
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+        sys.exit()
 
 from PySide2 import QtWidgets
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 import time
-import winreg
 import os
 import pickle
 
@@ -96,10 +97,13 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
         self.card_mouth.setText(card_end["month"])
 
     @staticmethod
-    def get_desktop():
-        key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
-                             r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
-        return winreg.QueryValueEx(key, "Desktop")[0]
+    def get_desktop_or_user_folder():
+        if sys.platform == "win32":
+            key = winreg.OpenKey(winreg.HKEY_CURRENT_USER,
+                                 r'Software\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders')
+            return winreg.QueryValueEx(key, "Desktop")[0]
+        else:
+            return os.path.expanduser("~")
 
     def show_msg_box(self, days):
         self.dialog = MessageBox(self)

@@ -12,12 +12,17 @@ jobs:
       upload_url: ${{ steps.create_release.outputs.upload_url }} 
     
     steps:
+      - name: Set UUID
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1
+        with:
+          name: ${{ gihub.sha }}
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          name: Release ${{ github.ref }}
+          tag_name: ${{ steps.generate-uuid.outputs.uuid }}
+          name: Release ${{ steps.generate-uuid.outputs.uuid }}
           body: 请查看README.md | Please look at README.md
           draft: false
           prerelease: false

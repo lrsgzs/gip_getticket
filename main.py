@@ -141,9 +141,10 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
                 if time.strftime("%H:%M:%S") == timeup2:
                     break
 
-        self.driver.switch_to.frame(self.driver.find_element(By.ID, "product_detail_area"))
         if self.is_reload.checkState():
             self.driver.refresh()
+            time.sleep(2)
+        self.driver.switch_to.frame(self.driver.find_element(By.ID, "product_detail_area"))
 
         wait_select_dom = self.driver.find_element(By.ID, "play_date")
         wait_select_dom.click()
@@ -195,13 +196,23 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
             pass
 
         time.sleep(5)
+
         js = f"frame = document.getElementById('ifrmSeat').contentWindow.document;" \
              f"txt = frame.getElementsByClassName('validationTxt')[0].getElementsByClassName('lang')[0];" \
              f"txt.title = '请输入防止不当订票的文字，您目前订购的票是第{self.days.text()}天的。';" \
-             f"txt.innerHTML = '请输入防止不当订票的文字，您目前订购的票是第{self.days.text()}天的。';" \
+             f"txt.innerHTML = '请输入防止不当订票的文字，您目前订购的票是第{self.days.text()}天的。';"
+        try:
+            self.driver.execute_script(js)
+        except:
+            pass
+
+        js = f"frame = document.getElementById('ifrmSeat').contentWindow.document;" \
              f"ele = frame.getElementsByClassName('btnWrap')[0];" \
              f"ele.innerHTML = ele.innerHTML + '<br><p>您目前订购的票是第{self.days.text()}天的。</p>'"
-        self.driver.execute_script(js)
+        try:
+            self.driver.execute_script(js)
+        except:
+            pass
 
         self.show_msg_box(self.days.text())
 

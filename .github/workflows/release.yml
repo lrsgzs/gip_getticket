@@ -56,9 +56,12 @@ jobs:
         pyinstaller -w main.py
 
     - name: Package
-      working-directory: .
-      run: |
-        zip -zcvf GIP_getticket-${{ matrix.os }}.zip -C dist/main/*
+      uses: thedoctor0/zip-release@0.7.1
+      with:
+        type: 'zip'
+        filename: release-${{ matrix.os }}-${{ matrix.python-version }}.zip
+        exclusions: '*.git* /*node_modules/* .editorconfig'
+        path: './dist/main'
 
     - name: Upload assets
       id: upload-release-asset

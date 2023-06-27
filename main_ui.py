@@ -415,7 +415,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "GlobalInterPark 抢票软件"))
-        self.label.setText(_translate("MainWindow", "# GlobalInterPark 抢票软件2.0"))
+        self.label.setText(_translate("MainWindow", "# GlobalInterPark 抢票软件"))
         self.label_2.setText(_translate("MainWindow", "网址："))
         self.getticket.setText(_translate("MainWindow", "开始抢票"))
         self.label_3.setText(_translate("MainWindow", "账号："))

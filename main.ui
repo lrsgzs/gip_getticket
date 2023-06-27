@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="text">
-     <string># GlobalInterPark 抢票软件2.0</string>
+     <string># GlobalInterPark 抢票软件</string>
     </property>
     <property name="textFormat">
      <enum>Qt::MarkdownText</enum>

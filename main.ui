@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>500</height>
+    <height>530</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,7 @@
      </font>
     </property>
     <property name="text">
-     <string># GlobalInterPark 抢票软件</string>
+     <string># GlobalInterPark 抢票软件2.0</string>
     </property>
     <property name="textFormat">
      <enum>Qt::MarkdownText</enum>
@@ -959,6 +959,35 @@
      <string>是否刷新</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_22">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>500</y>
+      <width>141</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>加载超时时间：       秒</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="timeout_sec">
+    <property name="geometry">
+     <rect>
+      <x>100</x>
+      <y>500</y>
+      <width>31</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>123</string>
+    </property>
+    <property name="maxLength">
+     <number>3</number>
+    </property>
+   </widget>
    <zorder>label_18</zorder>
    <zorder>label_12</zorder>
    <zorder>label_8</zorder>
@@ -1006,6 +1035,8 @@
    <zorder>start_min</zorder>
    <zorder>start_sec</zorder>
    <zorder>is_reload</zorder>
+   <zorder>label_22</zorder>
+   <zorder>timeout_sec</zorder>
   </widget>
  </widget>
  <tabstops>

@@ -4,7 +4,7 @@ from PySide2 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(400, 500)
+        MainWindow.resize(400, 530)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -335,6 +335,13 @@ class Ui_MainWindow(object):
         self.is_reload = QtWidgets.QCheckBox(self.centralwidget)
         self.is_reload.setGeometry(QtCore.QRect(50, 76, 71, 20))
         self.is_reload.setObjectName("is_reload")
+        self.label_22 = QtWidgets.QLabel(self.centralwidget)
+        self.label_22.setGeometry(QtCore.QRect(10, 500, 141, 21))
+        self.label_22.setObjectName("label_22")
+        self.timeout_sec = QtWidgets.QLineEdit(self.centralwidget)
+        self.timeout_sec.setGeometry(QtCore.QRect(100, 500, 31, 20))
+        self.timeout_sec.setMaxLength(3)
+        self.timeout_sec.setObjectName("timeout_sec")
         self.label_18.raise_()
         self.label_12.raise_()
         self.label_8.raise_()
@@ -382,6 +389,8 @@ class Ui_MainWindow(object):
         self.start_min.raise_()
         self.start_sec.raise_()
         self.is_reload.raise_()
+        self.label_22.raise_()
+        self.timeout_sec.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -451,3 +460,5 @@ class Ui_MainWindow(object):
         self.days.setText(_translate("MainWindow", "1"))
         self.label_18.setText(_translate("MainWindow", "     :      :"))
         self.is_reload.setText(_translate("MainWindow", "是否刷新"))
+        self.label_22.setText(_translate("MainWindow", "加载超时时间：       秒"))
+        self.timeout_sec.setText(_translate("MainWindow", ""))

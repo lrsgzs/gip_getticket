@@ -1,4 +1,6 @@
 import sys
+
+
 if sys.platform == "win32":
     import ctypes
     import winreg
@@ -17,8 +19,16 @@ if sys.platform == "win32":
 
 from PySide2 import QtWidgets
 from selenium import webdriver
+
+from selenium.webdriver.edge import options as edge_option
+from selenium.webdriver.chrome import options as chrome_option
+from selenium.webdriver.firefox import options as firefox_option
+from selenium.webdriver.safari import options as safari_option
+from selenium.webdriver.ie import options as ie_option
+
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
+import selenium.common.exceptions
 import time
 import os
 import pickle
@@ -34,6 +44,7 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
 
         self.dialog = None
         self.driver = None
+        self.option = None
         self.info = {"date": "", "time": "", "ticket": "", "money": "", "id": ""}
 
         self.getticket.clicked.connect(self.get_ticket)
@@ -121,7 +132,6 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
                     break
 
         webdrivers = [webdriver.ChromiumEdge, webdriver.Chrome, webdriver.Firefox, webdriver.Safari, webdriver.Ie]
-
         self.driver = webdrivers[self.webdriver_select.currentIndex()]()
         self.driver.maximize_window()
         self.driver.get("https://www.globalinterpark.com/user/signin")
@@ -136,15 +146,20 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
         self.driver.get(self.url.toPlainText())
 
         if self.is_open_timeup.checkState():
-            timeup2 = self.timeup_hour.text() + ":" + str(int(self.timeup_min.text()) - 1) + ":55"
+            timeup2 = self.timeup_hour.text() + ":" + self.timeup_min.text()
             while True:
-                if time.strftime("%H:%M:%S") == timeup2:
+                if time.strftime("%H:%M") == timeup2:
                     break
 
         if self.is_reload.checkState():
-            self.driver.refresh()
-            time.sleep(2)
+            self.driver.set_page_load_timeout(int(float(self.timeout_sec.text())))
+            try:
+                self.driver.refresh()
+            except selenium.common.exceptions.TimeoutException:
+                print("页面加载太拉了，停了算了")
+                self.driver.execute_script("window.stop()")
         self.driver.switch_to.frame(self.driver.find_element(By.ID, "product_detail_area"))
+        self.driver.set_page_load_timeout(300)
 
         wait_select_dom = self.driver.find_element(By.ID, "play_date")
         wait_select_dom.click()
@@ -290,7 +305,7 @@ class MainWindow(QtWidgets.QMainWindow, main_ui.Ui_MainWindow):
                f"座位: {self.info['ticket']}\n" \
                f"花的钱: {self.info['money']}\n" \
                f"ID: {self.info['id']}"
-        path = os.path.join(self.get_desktop(), txt_filename)
+        path = os.path.join(self.get_desktop_or_user_folder(), txt_filename)
         with open(path, "w", encoding="utf-8") as file:
             file.write(text)
 
